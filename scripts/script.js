@@ -5,14 +5,17 @@ let news_matter_data = [];
 let news_images = [];
 let news_dates_data = [];
 let news_morematter_data = [];
+
 getAPIData();
 function getAPIData(){
 console.log('${selected_category}');
 fetch(`https://newsapi.org/v2/everything?q=${selected_category}&from=2019-07-01&sortBy=publishedAt&apiKey=fdbb01062df842ca9c8863309f00c5ff`)
 .then(response => {
+    console.log(response);
     return response.json();
 })
 .then(response => {
+    console.log(response);
     return response.articles;
 })
 .then( response => {
@@ -42,7 +45,7 @@ fetch(`https://newsapi.org/v2/everything?q=${selected_category}&from=2019-07-01&
     console.log(response);
     news_dates_data=[];
     for(let positoin=0; positoin<10; positoin++){
-        news_dates_data.push(response[positoin].publishedAt);
+        news_dates_data.push(dateConversion(response[positoin].publishedAt));
     }
     return response;
 })
@@ -76,6 +79,19 @@ if (localStorage.getItem("email_list") === null) {
   else{
     email_list = JSON.parse(localStorage.getItem('email_list'));
   }
+
+//----------------------------------------------Date-Conversion--------------------------------
+
+function dateConversion(rawDate){
+    //2019-07-30T12:45:15Z    30 July, 2019
+    let ret = [];
+    let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    ret.push(rawDate.substring(8,10));
+    ret.push(months[Number(rawDate.substring(5,7))]);
+    ret.push(rawDate.substring(0,4));
+
+    return ret[0] + ' ' + ret[1] + ', ' + ret[2];
+}
 
 //-----------------------------------------------footer-----------------------------------------
 function createFooter(){
@@ -424,7 +440,6 @@ function createData()
         }
     }
     return data;
-
 }
 
 //---------------------------------overlaycontent-------------------------------------------

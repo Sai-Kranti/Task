@@ -9,7 +9,7 @@ let news_morematter_data = [];
 getAPIData();
 function getAPIData(){
 console.log('${selected_category}');
-fetch(`https://newsapi.org/v2/everything?q=${selected_category}&from=2019-07-01&sortBy=publishedAt&apiKey=fdbb01062df842ca9c8863309f00c5ff`)
+fetch(`https://newsapi.org/v2/everything?q=${selected_category}&from=2019-08-01&sortBy=publishedAt&apiKey=fdbb01062df842ca9c8863309f00c5ff`)
 .then(response => {
     console.log(response);
     return response.json();
